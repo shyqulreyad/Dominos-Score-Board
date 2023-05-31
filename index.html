@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dominos Score Board</title>
+</head>
+<body>
+    <h1>Dominos Score Board</h1>
+    <input type="text" name="id" id="id">
+    <input type="text" name="name" id="name">
+    <input type="text" name="point" id="point">
+    <button id="btn">submit</button>
+    <script>
+        // on click btn create object and set to local storage
+        document.getElementById('btn').addEventListener('click', function(){
+            var id = document.getElementById('id').value;
+            var name = document.getElementById('name').value;
+            var point = document.getElementById('point').value;
+            // get all the data from local storage and check if there is any 
+            // data with the same id
+            var data = JSON.parse(localStorage.getItem('data'+id));
+            if(data){
+                alert('id already exist');
+                console.log(data);
+            }else{
+                // create object
+                var obj = {
+                    id: id,
+                    name: name,
+                    point: point
+                }
+                // set object to local storage
+                localStorage.setItem('data'+id, JSON.stringify(obj));
+            }
+
+
+       
+        })
+
+    </script>
+</body>
+</html>
