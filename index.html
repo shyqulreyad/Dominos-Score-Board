@@ -42,8 +42,7 @@
                     </tr>
                 </thead>
                 <tbody id="tasklist" >
-                            <tr><td colspan='5' class='text-center'>Please Create a Project First</td></tr>
-                            <tr><td colspan='5' class='text-center'>Please Select Project</td></tr>
+                    <tr><td colspan='5' class='text-center'>Please Select Game</td></tr>
                 </tbody>
             </table>
         </section>
@@ -160,12 +159,48 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" integrity="sha512-3j3VU6WC5rPQB4Ld1jnLV7Kd5xr+cq9avvhwqzbH/taCRNURoeEpoPBK9pDyeukwSxwRPJ8fDgvYXd6SkaZ2TA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js" integrity="sha512-aUhL2xOCrpLEuGD5f6tgHbLYEXRpYZ8G5yD+WlFrXrPy2IrWBlu6bih5C9H6qGsgqnU6mgx6KtU8TreHpASprw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
 
         $(document).ready(function(){
+            //var score = JSON.parse(localStorage.getItem('score_board679258957'));
+            // update first player score using spread operator
+            //const updated_score =score[0].first_player_score = 100;
+           // console.log(score);
+           // console.log(score['Katelyn Prince']);
+           // score['Katelyn Prince'].push(20)
+            //console.log(score);
+           // console.log(score['Katelyn Prince']);
+            //console.log(updated_score);
+            $(".game_select").change(function(){
+                var game_select = $(this).val();
+                console.log(game_select);
+                $.cookie('game_select', game_select);
+                if(game_select == "" || game_select == null){
+                    var taskList = $("#tasklist");
+                    taskList.empty();
+                    taskList.append("<tr><td colspan='5' class='text-center'>Please Select Game</td></tr>");
+                    return false;
+                }else{
+                    getScore(game_select);
+                }
+            });
+
+            function getScore(game_id){
+                var score = JSON.parse(localStorage.getItem('score_board'+game_id));
+                console.log(score);
+
+            }
+
             show_all_games();
-            // hide score_board div
-            $('.score_board').hide();
+            var game_select = $.cookie('game_select');
+            if (game_select != 0 && game_select != undefined) {
+                $('.game_select').val(game_select);
+                getScore(game_select);
+            }else{
+                game_select = 0;
+            }
             // Create a new game and save it to local storage start
             // on click create_new_game button save the game name and id to local storage
             $('#create_new_game').click(function(){
@@ -173,42 +208,40 @@
                 var game_name = $('#game_name').val();
                 // generate random number for game id
                 var game_id = Math.floor(Math.random() * 1000000000);
-                var first_player = $('#first_player').val();
-                var second_player = $('#second_player').val();
-                var third_player = $('#third_player').val();
-                var fourth_player = $('#fourth_player').val();
                 // check if game exist in local storage and if it does get the data and push the new game to the array
                 var data = JSON.parse(localStorage.getItem('game'));
                 if(data){
                     data.push({
                         id: game_id,
                         name: game_name,
-                        first_player:first_player,
-                        second_player:second_player,
-                        third_player:third_player,
-                        fourth_player:fourth_player,
-                        first_player_score:0,
-                        second_player_score:0,
-                        third_player_score:0,
-                        fourth_player_score:0
                     });
                     localStorage.setItem('game', JSON.stringify(data));
+
+                    // create a new associative array with player name and add score to the array
+                    var score_board = {
+                        [$('#first_player').val()]: [],
+                        [$('#second_player').val()]: [],
+                        [$('#third_player').val()]: [],
+                        [$('#fourth_player').val()]: [],
+                     };
+                    
+                    localStorage.setItem('score_board'+game_id, JSON.stringify(score_board));
                 }else{
                     // if game does not exist in local storage create a new array and push the game to the array
                     var game = [];
                     game.push({
                         id: game_id,
-                        name: game_name,
-                        first_player:first_player,
-                        second_player:second_player,
-                        third_player:third_player,
-                        fourth_player:fourth_player,
-                        first_player_score:0,
-                        second_player_score:0,
-                        third_player_score:0,
-                        fourth_player_score:0
+                        name: game_name
                     });
                     localStorage.setItem('game', JSON.stringify(game));
+                    // create a new associative array with player name and add score to the array
+                    var score_board = {
+                    [$('#first_player').val()]: [],
+                    [$('#second_player').val()]: [],
+                    [$('#third_player').val()]: [],
+                    [$('#fourth_player').val()]: [],
+                   };
+                    localStorage.setItem('score_board'+game_id, JSON.stringify(score_board));
                 }
                 $('#game_name').val('');
                 show_all_games();
@@ -222,7 +255,7 @@
 
             // Create a new game and save it to local storage End
 
-            // showing all games in game_select dropdown start
+
             // get all games from local storage and show them in the game_select dropdown
             function show_all_games(){
                 var all_game = JSON.parse(localStorage.getItem('game'));
