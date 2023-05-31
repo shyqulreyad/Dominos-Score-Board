@@ -4,49 +4,242 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <title>Dominos Score Board</title>
 </head>
 <body>
-    <h1>Dominos Score Board</h1>
-    <input type="text" name="id" id="id" value="1">
-    <input type="text" name="name" id="name">
-    <input type="text" name="point" id="point">
-    <input type="text" name="id" id="id" value="2">
-    <input type="text" name="name" id="name">
-    <input type="text" name="point" id="point">
-    <input type="text" name="id" id="id" value="3">
-    <input type="text" name="name" id="name">
-    <input type="text" name="point" id="point">
-    <input type="text" name="id" id="id" value="4">
-    <input type="text" name="name" id="name">
-    <input type="text" name="point" id="point">
-    <button id="btn">submit</button>
+
+    <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container">
+                <div class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+
+                    <div class="nav-item dropdown">
+                        <select class="form-select text-center game_select">
+                            <option value="">Select Game</option>
+                          </select>
+                    </div>
+                </div>
+                <div class="d-flex" role="search">
+                    <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#create_game">Start New Game</button>
+                </div>
+            </div>
+        </nav>
+        <!-- table -->
+        <section class="container mt-4 score_board">
+            <div class="text-center">
+                <h2>Score Board</h2>
+            </div>
+            <table class="table table-responsive table-hover table-bordered text-center">
+                <thead>
+                    <tr class="item">
+                        <th class="player_one">Player One</th>
+                        <th class="player_two">Player Two</th>
+                        <th class="player_three">Player Three</th>
+                        <th class="player_four">Player Four</th>
+                    </tr>
+                </thead>
+                <tbody id="tasklist" >
+                            <tr><td colspan='5' class='text-center'>Please Create a Project First</td></tr>
+                            <tr><td colspan='5' class='text-center'>Please Select Project</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+    </div>
+    <!-- Button trigger modal -->
+
+
+  <!-- create Game Modal -->
+  <div class="modal fade" id="create_game" tabindex="-1" aria-labelledby="create_gameLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="create_gameLabel">Create a new Game</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+             <div class="mb-3">
+                <label for="game_name" class="form-label">Game Name</label>
+                <input type="text" class="form-control" id="game_name" name="game_name"  aria-describedby="emailHelp" required>
+            
+              </div>
+             <div class="mb-3">
+                <label for="first_player" class="form-label">First Player Name</label>
+                <input type="text" class="form-control" id="first_player" name="first_player"  aria-describedby="emailHelp" required>
+            
+              </div>
+                <div class="mb-3">
+                    <label for="second_player" class="form-label">Second Player Name</label>
+                    <input type="text" class="form-control" id="second_player" name="second_player"  aria-describedby="emailHelp" required>
+                
+                </div>
+                <div class="mb-3">
+                    <label for="third_player" class="form-label">Third Player Name</label>
+                    <input type="text" class="form-control" id="third_player" name="third_player"  aria-describedby="emailHelp" required>
+                
+                </div>
+                <div class="mb-3">
+                    <label for="fourth_player" class="form-label">Fourth Player Name</label>
+                    <input type="text" class="form-control" id="fourth_player" name="fourth_player"  aria-describedby="emailHelp" required>
+                
+                </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" id="create_new_game" class="btn btn-primary">Create</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- create task Modal -->
+    <div class="modal fade" id="create_task" tabindex="-1" aria-labelledby="create_taskLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="create_taskLabel">Create a new task</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+               <form method="post" action="{{route('task.create')}}">
+                 @csrf
+                 <div class="mb-3">
+                    <label for="task name" class="form-label">Task Name</label>
+                    <input type="text" class="form-control" id="task name" name="name"  aria-describedby="emailHelp" required>
+                    <div id="emailHelp" class="form-text">A new task will be created Under Currently Selected Project</div>
+                  </div>
+                  <div class="mb-3">
+                    <label for="task status" class="form-label">Task Status</label>
+                    <input type="text" class="form-control" id="task status" name="status"  aria-describedby="emailHelp" required>
+                    <div id="emailHelp" class="form-text">Give it a Status</div>
+                  </div>
+                  <input type="hidden" name="project_id" id="task_project_id" >
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Create</button>
+            </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+    <!-- Update task Modal -->
+    <div class="modal fade" id="update_task" tabindex="-1" aria-labelledby="Update_taskLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="Update_taskLabel">Update <span class="name_of_task"> </span></h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+               <form method="post" action="{{route('task.update')}}">
+                 @csrf
+                 <div class="mb-3">
+                    <label for="task name" class="form-label">Task Name</label>
+                    <input type="text" class="form-control" id="task_name_update" name="name"  aria-describedby="emailHelp" required>
+                  </div>
+                  <div class="mb-3">
+                    <label for="task status" class="form-label">Task Status</label>
+                    <input type="text" class="form-control" id="task_status_update" name="status"  aria-describedby="emailHelp" required>
+                  </div>
+                  <input type="hidden" name="project_id" id="edit_task_project_id" >
+                  <input type="hidden" name="task_id" id="task_id" >
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button"  class="btn btn-primary">Update</button>
+            </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
-        // on click btn create object and set to local storage
-        document.getElementById('btn').addEventListener('click', function(){
-            var id = document.getElementById('id').value;
-            var name = document.getElementById('name').value;
-            var point = document.getElementById('point').value;
-            // get all the data from local storage and check if there is any 
-            // data with the same id
-            var data = JSON.parse(localStorage.getItem('data'+id));
-            if(data){
-                alert('id already exist');
-                console.log(data);
-            }else{
-                // create object
-                var obj = {
-                    id: id,
-                    name: name,
-                    point: point
+
+        $(document).ready(function(){
+            show_all_games();
+            // hide score_board div
+            $('.score_board').hide();
+            // Create a new game and save it to local storage start
+            // on click create_new_game button save the game name and id to local storage
+            $('#create_new_game').click(function(){
+                console.log('clicked');
+                var game_name = $('#game_name').val();
+                // generate random number for game id
+                var game_id = Math.floor(Math.random() * 1000000000);
+                var first_player = $('#first_player').val();
+                var second_player = $('#second_player').val();
+                var third_player = $('#third_player').val();
+                var fourth_player = $('#fourth_player').val();
+                // check if game exist in local storage and if it does get the data and push the new game to the array
+                var data = JSON.parse(localStorage.getItem('game'));
+                if(data){
+                    data.push({
+                        id: game_id,
+                        name: game_name,
+                        first_player:first_player,
+                        second_player:second_player,
+                        third_player:third_player,
+                        fourth_player:fourth_player,
+                        first_player_score:0,
+                        second_player_score:0,
+                        third_player_score:0,
+                        fourth_player_score:0
+                    });
+                    localStorage.setItem('game', JSON.stringify(data));
+                }else{
+                    // if game does not exist in local storage create a new array and push the game to the array
+                    var game = [];
+                    game.push({
+                        id: game_id,
+                        name: game_name,
+                        first_player:first_player,
+                        second_player:second_player,
+                        third_player:third_player,
+                        fourth_player:fourth_player,
+                        first_player_score:0,
+                        second_player_score:0,
+                        third_player_score:0,
+                        fourth_player_score:0
+                    });
+                    localStorage.setItem('game', JSON.stringify(game));
                 }
-                // set object to local storage
-                localStorage.setItem('data'+id, JSON.stringify(obj));
+                $('#game_name').val('');
+                show_all_games();
+                $('#create_game').modal('hide');
+                toastr.success('Game Created Successfully','',{
+                    "positionClass": "toast-top-center",
+                    "closeButton": true,
+                    "progressBar": true,
+                });
+            })
+
+            // Create a new game and save it to local storage End
+
+            // showing all games in game_select dropdown start
+            // get all games from local storage and show them in the game_select dropdown
+            function show_all_games(){
+                var all_game = JSON.parse(localStorage.getItem('game'));
+                console.log(all_game);
+                if(all_game){
+                    $('.game_select').html('');
+                    $('.game_select').append('<option value="">Select Game</option>');
+                    $.each(all_game, function(index, value){
+                        $('.game_select').append('<option value="'+value.id+'">'+value.name+'</option>');
+                    });
+                }else{
+                    $('.game_select').html('');
+                    $('.game_select').append('<option value="">No Game Found</option>');
+                }
             }
 
-
-       
-        })
+        });
 
     </script>
 </body>
