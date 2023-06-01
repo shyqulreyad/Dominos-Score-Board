@@ -461,8 +461,11 @@
               JSON.stringify(score_board)
             );
           }
-          $("#game_name").val("");
           show_all_games();
+          $(".game_select").val(game_id);
+          $.cookie("game_select", game_id);
+          getScore(game_id);
+          $("#game_name").val("");
           $("#create_game").modal("hide");
           toastr.success("Game Created Successfully", "", {
             positionClass: "toast-top-center",
