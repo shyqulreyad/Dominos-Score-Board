@@ -214,14 +214,6 @@ $(document).ready(function () {
     var second_player_id = $("#second_player_score").attr("data-player_id");
     var third_player_id = $("#third_player_score").attr("data-player_id");
     var fourth_player_id = $("#fourth_player_score").attr("data-player_id");
-    console.log(first_player_id);
-    console.log(second_player_id);
-    console.log(third_player_id);
-    console.log(fourth_player_id);
-    console.log(first_player_score);
-    console.log(second_player_score);
-    console.log(third_player_score);
-    console.log(fourth_player_score);
     score_board[first_player_id].push(first_player_score);
     score_board[second_player_id].push(second_player_score);
     score_board[third_player_id].push(third_player_score);
@@ -231,6 +223,10 @@ $(document).ready(function () {
       JSON.stringify(score_board)
     );
     getScore(game_select);
+    $("#first_player_score").val("");
+    $("#second_player_score").val("");
+    $("#third_player_score").val("");
+    $("#fourth_player_score").val("");
     $("#add_score").modal("hide");
     toastr.success("Score Created Successfully", "", {
       positionClass: "toast-top-center",
