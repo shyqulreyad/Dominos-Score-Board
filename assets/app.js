@@ -1,13 +1,4 @@
 $(document).ready(function () {
-  //var score = JSON.parse(localStorage.getItem('score_board679258957'));
-  // update first player score using spread operator
-  //const updated_score =score[0].first_player_score = 100;
-  // console.log(score);
-  // console.log(score['Katelyn Prince']);
-  // score['Katelyn Prince'].push(20)
-  //console.log(score);
-  // console.log(score['Katelyn Prince']);
-  //console.log(updated_score);
   $(".score_board").hide();
   $(".game_select").change(function () {
     var game_select = $(this).val();
@@ -73,15 +64,15 @@ $(document).ready(function () {
     }
     if (data == "") {
       data = `<tr>
-      <td colspan="4" class="text-center">No data found</td>
+      <td colspan="4" class="text-center">Game is not started Yet</td>
     </tr>`;
     }
     $("#tasklist").empty();
     $("#tasklist").append(data);
-    $(".first_player_total").text(first_player_total);
-    $(".second_player_total").text(second_player_total);
-    $(".third_player_total").text(third_player_total);
-    $(".fourth_player_total").text(fourth_player_total);
+    $(".first_player_total").text(first_player_total == 0 ? "N/A" : first_player_total);
+    $(".second_player_total").text(second_player_total == 0 ? "N/A" : second_player_total);
+    $(".third_player_total").text(third_player_total == 0 ? "N/A" : third_player_total);
+    $(".fourth_player_total").text(fourth_player_total == 0 ? "N/A" : fourth_player_total);
     // if first player score is greater than 100 show the winner
     if (first_player_total > 100) {
       toastr.error("Kick out "+score[keys[0]][0] + " from the game");
@@ -119,11 +110,9 @@ $(document).ready(function () {
     if (
       $("#first_player").val() == "" ||
       $("#second_player").val() == "" ||
-      $("#third_player").val() == "" ||
-      $("#fourth_player").val() == "" ||
       game_name == ""
     ) {
-      toastr.error("Please fill all the fields");
+      toastr.error("Please add Game name and Minimum two players");
       return false;
     }
     if (data) {
