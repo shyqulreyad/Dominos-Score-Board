@@ -74,16 +74,16 @@ $(document).ready(function () {
     $(".third_player_total").text(third_player_total == 0 ? "N/A" : third_player_total);
     $(".fourth_player_total").text(fourth_player_total == 0 ? "N/A" : fourth_player_total);
     // if first player score is greater than 100 show the winner
-    if (first_player_total > 100) {
+    if (first_player_total >= 100) {
       toastr.error("Kick out "+score[keys[0]][0] + " from the game");
     }
-    if (second_player_total > 100) {
+    if (second_player_total >= 100) {
       toastr.error("Kick out "+score[keys[1]][0] + " from the game");
     }
-    if (third_player_total > 100) {
+    if (third_player_total >= 100) {
       toastr.error("Kick out "+score[keys[2]][0] + " from the game");
     }
-    if (fourth_player_total > 100) {
+    if (fourth_player_total >= 100) {
       toastr.error("Kick out "+score[keys[3]][0] + " from the game");
     }
 
