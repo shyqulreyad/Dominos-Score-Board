@@ -41,11 +41,14 @@
               data-bs-toggle="modal"
               data-bs-target="#create_game"
             >
-              Add <img   src="assets/icons8-dominos-100.png"
-              alt="New Game"
-              width="30px"
-              height="30px"
-              title="Create New Game" />
+              Create Game
+              <img
+                src="assets/icons8-dominos-100.png"
+                alt="New Game"
+                width="20px"
+                height="20px"
+                title="Create New Game"
+              />
             </button>
           </div>
         </div>
@@ -65,19 +68,25 @@
           </div>
         </div>
         <div class="score_board">
-          <div class="text-center">
-            <h2>
-              Score Board
-              <span data-bs-toggle="modal" data-bs-target="#add_score">
-                <img
-                  src="assets/icons8-add-100.png"
-                  alt="add Score"
-                  width="50px"
-                  height="50px"
-                  title="Add Score"
-                />
-              </span>
-            </h2>
+          <div class="d-flex justify-content-between px-2">
+            <div class="text-center">
+              <h2>Score Board</h2>
+            </div>
+            <button
+              type="button"
+              class="btn btn-info mb-2"
+              data-bs-toggle="modal"
+              data-bs-target="#add_score"
+            >
+              Add Score
+              <img
+                src="assets/icons8-add-100.png"
+                alt="add Score"
+                width="20px"
+                height="20px"
+                title="Add Score"
+              />
+            </button>
           </div>
           <table
             class="table table-responsive table-hover table-bordered text-center"
@@ -94,7 +103,6 @@
               <tr>
                 <td colspan="5" class="text-center">Please Select Game</td>
               </tr>
-            
             </tbody>
             <tfoot>
               <tr>

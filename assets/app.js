@@ -50,16 +50,28 @@ $(document).ready(function () {
     var third_player_total = 0;
     var fourth_player_total = 0;
     for (var i = 1; i < score[keys[0]].length; i++) {
-        var row = `<tr>
-        <td class="text-center">${score[keys[0]][i] ? score[keys[0]][i] : 0}</td>
-        <td class="text-center">${score[keys[1]][i] ? score[keys[1]][i] : 0}</td>
-        <td class="text-center">${score[keys[2]][i] ? score[keys[2]][i] : 0}</td>
-        <td class="text-center">${score[keys[3]][i] ? score[keys[3]][i] : 0}</td>
-      </tr>`
+      var row = `<tr>
+        <td class="text-center">${
+          score[keys[0]][i] ? score[keys[0]][i] : 0
+        }</td>
+        <td class="text-center">${
+          score[keys[1]][i] ? score[keys[1]][i] : 0
+        }</td>
+        <td class="text-center">${
+          score[keys[2]][i] ? score[keys[2]][i] : 0
+        }</td>
+        <td class="text-center">${
+          score[keys[3]][i] ? score[keys[3]][i] : 0
+        }</td>
+      </tr>`;
       first_player_total += parseInt(score[keys[0]][i] ? score[keys[0]][i] : 0);
-      second_player_total += parseInt(score[keys[1]][i] ? score[keys[1]][i] : 0);
+      second_player_total += parseInt(
+        score[keys[1]][i] ? score[keys[1]][i] : 0
+      );
       third_player_total += parseInt(score[keys[2]][i] ? score[keys[2]][i] : 0);
-      fourth_player_total += parseInt(score[keys[3]][i] ? score[keys[3]][i] : 0);
+      fourth_player_total += parseInt(
+        score[keys[3]][i] ? score[keys[3]][i] : 0
+      );
       data += row;
     }
     if (data == "") {
@@ -69,26 +81,62 @@ $(document).ready(function () {
     }
     $("#tasklist").empty();
     $("#tasklist").append(data);
-    $(".first_player_total").text(first_player_total == 0 ? "N/A" : first_player_total);
-    $(".second_player_total").text(second_player_total == 0 ? "N/A" : second_player_total);
-    $(".third_player_total").text(third_player_total == 0 ? "N/A" : third_player_total);
-    $(".fourth_player_total").text(fourth_player_total == 0 ? "N/A" : fourth_player_total);
-    // if first player score is greater than 100 show the winner
+    $(".first_player_total").text(
+      first_player_total == 0 ? "N/A" : first_player_total
+    );
+    // add text color red if score is greater than 100
     if (first_player_total >= 100) {
-      toastr.error("Kick out "+score[keys[0]][0] + " from the game");
+      toastr.error("Kick out " + score[keys[0]][0] + " from the game", "", {
+        positionClass: "toast-top-center",
+        closeButton: true,
+        progressBar: true,
+      });
+      $(".first_player_total").addClass("text-danger");
+    } else {
+      $(".first_player_total").removeClass("text-danger");
     }
+    $(".second_player_total").text(
+      second_player_total == 0 ? "N/A" : second_player_total
+    );
     if (second_player_total >= 100) {
-      toastr.error("Kick out "+score[keys[1]][0] + " from the game");
+      toastr.error("Kick out " + score[keys[1]][0] + " from the game", "", {
+        positionClass: "toast-top-center",
+        closeButton: true,
+        progressBar: true,
+      });
+      $(".second_player_total").addClass("text-danger");
+    } else {
+      $(".second_player_total").removeClass("text-danger");
     }
+    $(".third_player_total").text(
+      third_player_total == 0 ? "N/A" : third_player_total
+    );
     if (third_player_total >= 100) {
-      toastr.error("Kick out "+score[keys[2]][0] + " from the game");
+      toastr.error("Kick out " + score[keys[2]][0] + " from the game", "", {
+        positionClass: "toast-top-center",
+        closeButton: true,
+        progressBar: true,
+      });
+      $(".third_player_total").addClass("text-danger");
+    } else {
+      $(".third_player_total").removeClass("text-danger");
     }
+    $(".fourth_player_total").text(
+      fourth_player_total == 0 ? "N/A" : fourth_player_total
+    );
     if (fourth_player_total >= 100) {
-      toastr.error("Kick out "+score[keys[3]][0] + " from the game");
+      toastr.error("Kick out " + score[keys[3]][0] + " from the game", "", {
+        positionClass: "toast-top-center",
+        closeButton: true,
+        progressBar: true,
+      });
+
+      $(".fourth_player_total").addClass("text-danger");
+    } else {
+      $(".fourth_player_total").removeClass("text-danger");
     }
 
     $(".score_board").show();
-
   }
 
   show_all_games();
